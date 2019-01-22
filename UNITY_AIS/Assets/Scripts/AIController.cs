@@ -5,35 +5,48 @@ using UnityEngine.UI;
 public class AIController : MonoBehaviour
 {
 
-    public Transform Player;
-    int MoveSpeed = 4;
-    int MaxDist = 10;
-    int MinDist = 2;
+    public Transform Target;
 
-    private CharacterController controller;
-
+    // Individual steering behaviour scripts.
+    sbSeek seekScript;
+    sbFlee fleeScript;
+    
+    // Currently active behaviour.
+    enum Behaviour { Seek, Flee };
+    Behaviour selectedBehaviour;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-
+        seekScript = GetComponent<sbSeek>();
+        fleeScript = GetComponent<sbFlee>();
     }
 
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.S))
+            selectedBehaviour = Behaviour.Seek;
 
-        if (Vector3.Distance(transform.position, Player.position) >= MinDist)
+        if (Input.GetKeyUp(KeyCode.F))
+            selectedBehaviour = Behaviour.Flee;
+    }
+
+    void FixedUpdate()
+    {
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+        switch (selectedBehaviour)
         {
-            transform.LookAt(Player);
-
-            controller.SimpleMove(transform.forward * MoveSpeed);
-
-
-        }
-        else
-        {
-            controller.SimpleMove(Vector3.zero);
+            case Behaviour.Flee:
+                // Apply the steering behaviour and update the orientation.
+                fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                transform.LookAt(transform.position - (Target.position - transform.position));
+                break;
+            case Behaviour.Seek:
+            default:
+                // Apply the steering behaviour and update the orientation.
+                seekScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                transform.LookAt(Target.position);
+                break;
         }
     }
 }

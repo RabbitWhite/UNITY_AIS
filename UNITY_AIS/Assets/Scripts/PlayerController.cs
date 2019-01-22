@@ -3,30 +3,26 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    public float movementSpeed = 6.0f;
+    public float rotationSpeed = 8.0f;
 
-    public float speed = 6.0f;
-    public float rotateSpeed = 8.0f;
-
-    private Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-
-        // let the gameObject fall down
-        gameObject.transform.position = new Vector3(0, 5, 0);
     }
 
     void FixedUpdate()
     {
-        // Rotate around y - axis
-        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
+        // Rotate player character based on user input. 
+        transform.Rotate(0, Input.GetAxis("Horizontal") * rotationSpeed, 0);
 
-        // Move forward / backward
+        // Determine where player character is facing.
         Vector3 forward = transform.TransformDirection(Vector3.forward);
 
-        float curSpeed = speed * Input.GetAxis("Vertical");
+        // Move the player.
+        float curSpeed = movementSpeed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
   
     }
