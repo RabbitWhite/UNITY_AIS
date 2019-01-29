@@ -8,9 +8,12 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller;
 
+    Animator anim;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -24,6 +27,8 @@ public class PlayerController : MonoBehaviour
         // Move the player.
         float curSpeed = movementSpeed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
+
+        anim.SetFloat("velocity", controller.velocity.magnitude);
   
     }
 }

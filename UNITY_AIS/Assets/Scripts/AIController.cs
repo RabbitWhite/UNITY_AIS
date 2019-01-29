@@ -10,24 +10,21 @@ public class AIController : MonoBehaviour
     // Individual steering behaviour scripts.
     sbSeek seekScript;
     sbFlee fleeScript;
-    
+    sbArrive arriveScript;
+
     // Currently active behaviour.
-    enum Behaviour { Seek, Flee };
-    Behaviour selectedBehaviour;
+    public enum Behaviour { Seek, Flee, Arrive };
+    public Behaviour selectedBehaviour;
+
+    Animator anim;
 
     void Start()
     {
         seekScript = GetComponent<sbSeek>();
         fleeScript = GetComponent<sbFlee>();
-    }
+        arriveScript = GetComponent<sbArrive>();
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-            selectedBehaviour = Behaviour.Seek;
-
-        if (Input.GetKeyUp(KeyCode.F))
-            selectedBehaviour = Behaviour.Flee;
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -41,6 +38,11 @@ public class AIController : MonoBehaviour
                 fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
                 transform.LookAt(transform.position - (Target.position - transform.position));
                 break;
+            case Behaviour.Arrive:
+                // Apply the steering behaviour and update the orientation.
+                arriveScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                transform.LookAt(Target.position);
+                break;
             case Behaviour.Seek:
             default:
                 // Apply the steering behaviour and update the orientation.
@@ -48,5 +50,7 @@ public class AIController : MonoBehaviour
                 transform.LookAt(Target.position);
                 break;
         }
+
+        anim.SetFloat("velocity", rigidbody.velocity.magnitude);
     }
 }
