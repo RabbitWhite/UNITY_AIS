@@ -7,6 +7,8 @@ public class AIController : MonoBehaviour
 
     public Transform Target;
 
+    bool active = true;
+
     // Individual steering behaviour scripts.
     sbSeek seekScript;
     sbFlee fleeScript;
@@ -31,26 +33,42 @@ public class AIController : MonoBehaviour
     {
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-        switch (selectedBehaviour)
+        if (active)
         {
-            case Behaviour.Flee:
-                // Apply the steering behaviour and update the orientation.
-                fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
-                transform.LookAt(transform.position - (Target.position - transform.position));
-                break;
-            case Behaviour.Arrive:
-                // Apply the steering behaviour and update the orientation.
-                arriveScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
-                transform.LookAt(Target.position);
-                break;
-            case Behaviour.Seek:
-            default:
-                // Apply the steering behaviour and update the orientation.
-                seekScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
-                transform.LookAt(Target.position);
-                break;
+            switch (selectedBehaviour)
+            {
+                case Behaviour.Flee:
+                    // Apply the steering behaviour and update the orientation.
+                    fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    transform.LookAt(transform.position - (Target.position - transform.position));
+                    break;
+                case Behaviour.Arrive:
+                    // Apply the steering behaviour and update the orientation.
+                    arriveScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    transform.LookAt(Target.position);
+                    break;
+                case Behaviour.Seek:
+                default:
+                    // Apply the steering behaviour and update the orientation.
+                    seekScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    transform.LookAt(Target.position);
+                    break;
+            }
+            anim.SetFloat("velocity", rigidbody.velocity.magnitude);
         }
+        else
+        {
+            rigidbody.velocity = Vector3.zero;
+            anim.SetFloat("velocity", 0.0f);
 
-        anim.SetFloat("velocity", rigidbody.velocity.magnitude);
+            if (Vector3.Distance(this.transform.position, Target.position) > 3.0f)
+                active = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+            active = false;
     }
 }

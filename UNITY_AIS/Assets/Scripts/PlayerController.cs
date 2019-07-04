@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         // Rotate player character based on user input. 
         transform.Rotate(0, Input.GetAxis("Horizontal") * rotationSpeed, 0);
 
