@@ -14,6 +14,9 @@ public class AIController : MonoBehaviour
     sbFlee fleeScript;
     sbArrive arriveScript;
 
+    GUIController guiController;
+
+
     // Currently active behaviour.
     public enum Behaviour { Seek, Flee, Arrive };
     public Behaviour selectedBehaviour;
@@ -27,6 +30,8 @@ public class AIController : MonoBehaviour
         arriveScript = GetComponent<sbArrive>();
 
         anim = GetComponent<Animator>();
+
+        guiController = GameObject.Find("Main Canvas").GetComponent<GUIController>();
     }
 
     void FixedUpdate()
@@ -41,17 +46,29 @@ public class AIController : MonoBehaviour
                     // Apply the steering behaviour and update the orientation.
                     fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
                     transform.LookAt(transform.position - (Target.position - transform.position));
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + fleeScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + fleeScript.descriptionOfBehaviour;
+
                     break;
                 case Behaviour.Arrive:
                     // Apply the steering behaviour and update the orientation.
                     arriveScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
                     transform.LookAt(Target.position);
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + arriveScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + arriveScript.descriptionOfBehaviour;
+
                     break;
                 case Behaviour.Seek:
                 default:
                     // Apply the steering behaviour and update the orientation.
                     seekScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
                     transform.LookAt(Target.position);
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + seekScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + seekScript.descriptionOfBehaviour;
+
                     break;
             }
             anim.SetFloat("velocity", rigidbody.velocity.magnitude);

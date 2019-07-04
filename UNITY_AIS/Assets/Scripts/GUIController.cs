@@ -9,22 +9,26 @@ public class GUIController : MonoBehaviour
 
     AIController aiController;
 
-    public Text seekFleeText;
+    public Text nameOfBehaviour;
 
+    public Text descriptionOfBehaviour;
 
     void Start()
     {
-        dropdownComponent = GetComponent<Dropdown>();
+        dropdownComponent = GetComponentInChildren<Dropdown>();
 
         dropdownComponent.onValueChanged.AddListener(delegate {
             DropdownValueChanged(dropdownComponent);
         });
 
         aiController = (AIController) GameObject.FindGameObjectWithTag("AI_antagonist").GetComponent<AIController>();
+
+        nameOfBehaviour = (Text)gameObject.transform.Find("General Info").Find("Behaviour Name").GetComponent<Text>();
+        descriptionOfBehaviour = (Text)gameObject.transform.Find("General Info").Find("Behaviour Description").GetComponent<Text>();
     }
 
     void DropdownValueChanged(Dropdown changedDropdown)
     {
-         aiController.selectedBehaviour = (AIController.Behaviour) changedDropdown.value;
+        aiController.selectedBehaviour = (AIController.Behaviour) changedDropdown.value;
     }
 }
