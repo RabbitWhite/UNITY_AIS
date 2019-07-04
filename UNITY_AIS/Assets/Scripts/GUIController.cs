@@ -13,6 +13,11 @@ public class GUIController : MonoBehaviour
 
     public Text descriptionOfBehaviour;
 
+    GameObject title;
+    GameObject behaviourSelector;
+    GameObject generalInfo;
+    GameObject objectHUDs;
+
     Text protagonistHUD;
 
     GameObject antagonist;
@@ -21,9 +26,16 @@ public class GUIController : MonoBehaviour
 
     GameObject protagonist;
 
+    bool visibleGUIHUD = true;
+
     void Start()
     {
-        dropdownComponent = GetComponentInChildren<Dropdown>();
+        title = gameObject.transform.Find("Title").gameObject;
+        behaviourSelector = gameObject.transform.Find("Behaviour Selector").gameObject;
+        generalInfo = gameObject.transform.Find("General Info").gameObject;
+        objectHUDs = gameObject.transform.Find("Object HUDs").gameObject;
+
+        dropdownComponent = behaviourSelector.GetComponent<Dropdown>();
 
         dropdownComponent.onValueChanged.AddListener(delegate {
             DropdownValueChanged(dropdownComponent);
@@ -31,11 +43,11 @@ public class GUIController : MonoBehaviour
 
         aiController = (AIController) GameObject.FindGameObjectWithTag("AI_antagonist").GetComponent<AIController>();
 
-        nameOfBehaviour = (Text)gameObject.transform.Find("General Info").Find("Behaviour Name").GetComponent<Text>();
-        descriptionOfBehaviour = (Text)gameObject.transform.Find("General Info").Find("Behaviour Description").GetComponent<Text>();
+        nameOfBehaviour = (Text) generalInfo.transform.Find("Behaviour Name").GetComponent<Text>();
+        descriptionOfBehaviour = (Text) generalInfo.transform.Find("Behaviour Description").GetComponent<Text>();
 
         protagonist = GameObject.FindGameObjectWithTag("Player");
-        protagonistHUD = (Text)gameObject.transform.Find("ObjectHUDs").Find("ProtagonistHUD").GetComponent<Text>();
+        protagonistHUD = (Text) objectHUDs.transform.Find("ProtagonistHUD").GetComponent<Text>();
 
         // Calculate *screen* position (note, not a canvas/recttransform position)
         Vector2 canvasPos = new Vector2();
@@ -52,7 +64,7 @@ public class GUIController : MonoBehaviour
         protagonistHUD.transform.localPosition = canvasPos;
 
         antagonist = GameObject.FindGameObjectWithTag("AI_antagonist");
-        antagonistHUD = (Text)gameObject.transform.Find("ObjectHUDs").Find("AntagonistHUD").GetComponent<Text>();
+        antagonistHUD = (Text) objectHUDs.transform.Find("AntagonistHUD").GetComponent<Text>();
 
         // Calculate *screen* position (note, not a canvas/recttransform position)
         canvasPos = new Vector2();
@@ -90,9 +102,6 @@ public class GUIController : MonoBehaviour
         // Set
         protagonistHUD.transform.localPosition = canvasPos;
 
-        antagonist = GameObject.FindGameObjectWithTag("AI_antagonist");
-        antagonistHUD = (Text)gameObject.transform.Find("ObjectHUDs").Find("AntagonistHUD").GetComponent<Text>();
-
         // Calculate *screen* position (note, not a canvas/recttransform position)
         canvasPos = new Vector2();
         screenPoint = Camera.main.WorldToScreenPoint(antagonist.transform.position);
@@ -106,6 +115,29 @@ public class GUIController : MonoBehaviour
 
         // Set
         antagonistHUD.transform.localPosition = canvasPos;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            visibleGUIHUD = visibleGUIHUD == true ? false : true;
+
+            if (visibleGUIHUD)
+            {
+                title.SetActive(true);
+                behaviourSelector.SetActive(true);
+                generalInfo.SetActive(true);
+                objectHUDs.SetActive(true);
+            }
+            else
+            {
+                title.SetActive(false);
+                behaviourSelector.SetActive(false);
+                generalInfo.SetActive(false);
+                objectHUDs.SetActive(false);
+            }
+        }
     }
 
 

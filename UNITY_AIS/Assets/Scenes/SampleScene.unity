@@ -624,7 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323671801}
   m_Layer: 5
-  m_Name: ObjectHUDs
+  m_Name: Object HUDs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 761315961}
   - component: {fileID: 761315960}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: Behaviour Selector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1951,7 +1951,7 @@ GameObject:
   - component: {fileID: 1629416290}
   - component: {fileID: 1629416289}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
