@@ -26,7 +26,8 @@ public class GUIController : MonoBehaviour
 
     GameObject protagonist;
 
-    bool visibleGUIHUD = true;
+    bool visibleGUI = true;
+    bool visibleHUD = true;
     bool gamePaused = false;
 
     void Start()
@@ -54,7 +55,7 @@ public class GUIController : MonoBehaviour
         Vector2 canvasPos = new Vector2();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(protagonist.transform.position);
 
-        Vector2 adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 75);
+        Vector2 adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 150);
 
         RectTransform canvasRect = (RectTransform) this.transform;
 
@@ -71,7 +72,7 @@ public class GUIController : MonoBehaviour
         canvasPos = new Vector2();
         screenPoint = Camera.main.WorldToScreenPoint(antagonist.transform.position);
 
-        adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 75);
+        adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 150);
 
         canvasRect = (RectTransform)this.transform;
 
@@ -93,7 +94,7 @@ public class GUIController : MonoBehaviour
         Vector2 canvasPos = new Vector2();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(protagonist.transform.position);
 
-        Vector2 adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 75);
+        Vector2 adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 150);
 
         RectTransform canvasRect = (RectTransform)this.transform;
 
@@ -107,7 +108,7 @@ public class GUIController : MonoBehaviour
         canvasPos = new Vector2();
         screenPoint = Camera.main.WorldToScreenPoint(antagonist.transform.position);
 
-        adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 75);
+        adjustedScreenPoint = new Vector3(screenPoint.x, screenPoint.y + 150);
 
         canvasRect = (RectTransform)this.transform;
 
@@ -120,22 +121,34 @@ public class GUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            visibleGUIHUD = visibleGUIHUD == true ? false : true;
+            visibleGUI = visibleGUI == true ? false : true;
 
-            if (visibleGUIHUD)
+            if (visibleGUI)
             {
                 title.SetActive(true);
                 behaviourSelector.SetActive(true);
                 generalInfo.SetActive(true);
-                objectHUDs.SetActive(true);
             }
             else
             {
                 title.SetActive(false);
                 behaviourSelector.SetActive(false);
                 generalInfo.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            visibleHUD = visibleHUD == true ? false : true;
+
+            if (visibleHUD)
+            {
+                objectHUDs.SetActive(true);
+            }
+            else
+            {
                 objectHUDs.SetActive(false);
             }
         }
