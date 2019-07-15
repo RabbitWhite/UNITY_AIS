@@ -27,6 +27,7 @@ public class GUIController : MonoBehaviour
     GameObject protagonist;
 
     bool visibleGUIHUD = true;
+    bool gamePaused = false;
 
     void Start()
     {
@@ -136,6 +137,20 @@ public class GUIController : MonoBehaviour
                 behaviourSelector.SetActive(false);
                 generalInfo.SetActive(false);
                 objectHUDs.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (gamePaused == false)
+            {
+                Time.timeScale = 0.0f;
+                gamePaused = true;
+            }
+            else
+            {
+                Time.timeScale = 1.0f;
+                gamePaused = false;
             }
         }
     }
