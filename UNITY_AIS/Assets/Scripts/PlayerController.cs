@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 6.0f;
     public float rotationSpeed = 8.0f;
 
+    public Vector3 currentVelocity = Vector3.zero;
+
     private CharacterController controller;
 
     Animator anim;
@@ -30,6 +32,9 @@ public class PlayerController : MonoBehaviour
         controller.SimpleMove(forward * curSpeed);
 
         anim.SetFloat("velocity", controller.velocity.magnitude);
-  
+
+        currentVelocity = controller.velocity;
+        Debug.Log("target velocity before " + controller.velocity);
+
     }
 }

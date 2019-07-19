@@ -7,18 +7,23 @@ public class AIController : MonoBehaviour
 
     public Transform Target;
 
+    Rigidbody targetRB;
+    CharacterController targetCC;
+
     bool active = true;
 
     // Individual steering behaviour scripts.
     sbSeek seekScript;
     sbFlee fleeScript;
     sbArrive arriveScript;
+    sbPursue pursueScript;
 
     GUIController guiController;
+    PlayerController playerController;
 
 
     // Currently active behaviour.
-    public enum Behaviour { Seek, Flee, Arrive };
+    public enum Behaviour { Seek, Flee, Arrive, Pursue };
     public Behaviour selectedBehaviour;
 
     Animator anim;
@@ -28,10 +33,15 @@ public class AIController : MonoBehaviour
         seekScript = GetComponent<sbSeek>();
         fleeScript = GetComponent<sbFlee>();
         arriveScript = GetComponent<sbArrive>();
+        pursueScript = GetComponent<sbPursue>();
+
+        targetRB = Target.GetComponent<Rigidbody>();
+        targetCC = Target.GetComponent<CharacterController>();
 
         anim = GetComponent<Animator>();
 
         guiController = GameObject.Find("Main Canvas").GetComponent<GUIController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     void FixedUpdate()
@@ -44,7 +54,7 @@ public class AIController : MonoBehaviour
             {
                 case Behaviour.Flee:
                     // Apply the steering behaviour and update the orientation.
-                    fleeScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    fleeScript.updateVelocity(ref rigidbody, ref targetRB);
                     transform.LookAt(transform.position - (Target.position - transform.position));
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + fleeScript.nameOfBehaviour;
@@ -53,17 +63,27 @@ public class AIController : MonoBehaviour
                     break;
                 case Behaviour.Arrive:
                     // Apply the steering behaviour and update the orientation.
-                    arriveScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    arriveScript.updateVelocity(ref rigidbody, ref targetRB);
                     transform.LookAt(Target.position);
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + arriveScript.nameOfBehaviour;
                     guiController.descriptionOfBehaviour.text = "Description: \n" + arriveScript.descriptionOfBehaviour;
 
                     break;
+                case Behaviour.Pursue:
+                    // Apply the steering behaviour and update the orientation.
+                    Debug.Log("target velocity before A " + playerController.currentVelocity);
+                    pursueScript.updateVelocity(ref rigidbody, ref targetCC);
+                    transform.LookAt(Target.position);
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + pursueScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + pursueScript.descriptionOfBehaviour;
+
+                    break;
                 case Behaviour.Seek:
                 default:
                     // Apply the steering behaviour and update the orientation.
-                    seekScript.updateVelocity(ref rigidbody, Target.GetComponent<Rigidbody>());
+                    seekScript.updateVelocity(ref rigidbody, ref targetCC);
                     transform.LookAt(Target.position);
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + seekScript.nameOfBehaviour;

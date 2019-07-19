@@ -10,7 +10,7 @@ public class sbFlee : MonoBehaviour, ISteeringBehaviorRelational<Rigidbody>
 
     public string descriptionOfBehaviour = "Method based on steering behaviours presented by C. Reynols, see https://www.red3d.com/cwr/steer/";
 
-    public void updateVelocity(ref Rigidbody ownRB, Rigidbody targetRB)
+    public void updateVelocity(ref Rigidbody ownRB, ref Rigidbody targetRB)
     {
         ownRB.velocity = (ownRB.transform.position - targetRB.transform.position).normalized * movementSpeed; 
     }

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ISteeringBehaviorRelational<T>
 {
-    void updateVelocity(ref T ownRB, T targetRB);
+    void updateVelocity(ref T ownRB, ref T targetRB);
 }
