@@ -1118,7 +1118,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Arrive
       m_Image: {fileID: 0}
-    - m_Text: Pursue
+    - m_Text: Align
+      m_Image: {fileID: 0}
+    - m_Text: Piursue
       m_Image: {fileID: 0}
     - m_Text: Evade
       m_Image: {fileID: 0}
@@ -1913,6 +1915,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   nameOfBehaviour: Flee
+  descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
+    see https://www.red3d.com/cwr/steer/
+--- !u!114 &1454016992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454016984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75907eb61615272439ad61d5b94a32f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  nameOfBehaviour: Arrive
   descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
     see https://www.red3d.com/cwr/steer/
 --- !u!114 &1454016994
