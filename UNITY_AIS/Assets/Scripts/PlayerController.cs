@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("velocity", controller.velocity.magnitude);
 
         currentVelocity = controller.velocity;
-        Debug.Log("target velocity before " + controller.velocity);
 
     }
 }

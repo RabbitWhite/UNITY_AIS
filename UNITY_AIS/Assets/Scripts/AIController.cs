@@ -17,13 +17,15 @@ public class AIController : MonoBehaviour
     sbFlee fleeScript;
     sbArrive arriveScript;
     sbPursue pursueScript;
+    sbEvade evadeScript;
+    
 
     GUIController guiController;
     PlayerController playerController;
 
 
     // Currently active behaviour.
-    public enum Behaviour { Seek, Flee, Arrive, Pursue };
+    public enum Behaviour { Seek, Flee, Arrive, Pursue, Evade };
     public Behaviour selectedBehaviour;
 
     Animator anim;
@@ -34,6 +36,7 @@ public class AIController : MonoBehaviour
         fleeScript = GetComponent<sbFlee>();
         arriveScript = GetComponent<sbArrive>();
         pursueScript = GetComponent<sbPursue>();
+        evadeScript = GetComponent<sbEvade>();
 
         targetRB = Target.GetComponent<Rigidbody>();
         targetCC = Target.GetComponent<CharacterController>();
@@ -54,7 +57,7 @@ public class AIController : MonoBehaviour
             {
                 case Behaviour.Flee:
                     // Apply the steering behaviour and update the orientation.
-                    fleeScript.updateVelocity(ref rigidbody, ref targetRB);
+                    fleeScript.updateVelocity(ref rigidbody, ref targetCC);
                     transform.LookAt(transform.position - (Target.position - transform.position));
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + fleeScript.nameOfBehaviour;
@@ -63,8 +66,7 @@ public class AIController : MonoBehaviour
                     break;
                 case Behaviour.Arrive:
                     // Apply the steering behaviour and update the orientation.
-                    arriveScript.updateVelocity(ref rigidbody, ref targetRB);
-                    transform.LookAt(Target.position);
+                    arriveScript.updateVelocity(ref rigidbody, ref targetCC);             
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + arriveScript.nameOfBehaviour;
                     guiController.descriptionOfBehaviour.text = "Description: \n" + arriveScript.descriptionOfBehaviour;
@@ -72,9 +74,17 @@ public class AIController : MonoBehaviour
                     break;
                 case Behaviour.Pursue:
                     // Apply the steering behaviour and update the orientation.
-                    Debug.Log("target velocity before A " + playerController.currentVelocity);
                     pursueScript.updateVelocity(ref rigidbody, ref targetCC);
-                    transform.LookAt(Target.position);
+                    
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + pursueScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + pursueScript.descriptionOfBehaviour;
+
+                    break;
+                case Behaviour.Evade:
+                    // Apply the steering behaviour and update the orientation.
+                    evadeScript.updateVelocity(ref rigidbody, ref targetCC);
+
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + pursueScript.nameOfBehaviour;
                     guiController.descriptionOfBehaviour.text = "Description: \n" + pursueScript.descriptionOfBehaviour;
@@ -84,7 +94,6 @@ public class AIController : MonoBehaviour
                 default:
                     // Apply the steering behaviour and update the orientation.
                     seekScript.updateVelocity(ref rigidbody, ref targetCC);
-                    transform.LookAt(Target.position);
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + seekScript.nameOfBehaviour;
                     guiController.descriptionOfBehaviour.text = "Description: \n" + seekScript.descriptionOfBehaviour;

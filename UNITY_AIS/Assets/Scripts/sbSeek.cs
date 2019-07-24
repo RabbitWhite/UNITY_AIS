@@ -12,6 +12,7 @@ public class sbSeek : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigidbo
 
     public void updateVelocity(ref Rigidbody ownRB, ref CharacterController targetRB)
     {
-        ownRB.velocity = (targetRB.transform.position - ownRB.transform.position).normalized * movementSpeed; 
+        ownRB.velocity = (targetRB.transform.position - ownRB.transform.position).normalized * movementSpeed;
+        transform.LookAt(targetRB.transform.position);
     }
 }

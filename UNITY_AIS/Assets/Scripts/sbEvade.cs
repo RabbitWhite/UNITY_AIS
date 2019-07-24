@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sbPursue : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigidbody, CharacterController>
+public class sbEvade : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigidbody, CharacterController>
 {
     public float movementSpeed = 4.0f;
-    float maximumPrediction = 5.0f;
+    float maximumPrediction = 1.0f;
     float prediction = 0.0f;
 
     public string nameOfBehaviour = "Pursue";
@@ -33,7 +33,8 @@ public class sbPursue : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigid
             prediction = distanceToTarget / ownRB.velocity.magnitude;
         }
         Vector3 predictedTargetPosition = targetCC.transform.position + playerController.currentVelocity * prediction;
-        ownRB.velocity = (predictedTargetPosition - ownRB.transform.position).normalized * movementSpeed;
-        transform.LookAt(targetCC.transform.position);
+        ownRB.velocity = (ownRB.transform.position - predictedTargetPosition).normalized * movementSpeed;
+        Quaternion rotation = Quaternion.LookRotation(ownRB.velocity, Vector3.up);
+        transform.rotation = rotation;
     }
 }
