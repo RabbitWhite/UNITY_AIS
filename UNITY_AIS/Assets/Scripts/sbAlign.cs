@@ -6,7 +6,7 @@ public class sbAlign : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigidb
 {
     public float rotationSpeed;
 
-    public string nameOfBehaviour = "Arrive";
+    public string nameOfBehaviour = "Align";
 
     public string descriptionOfBehaviour = "Method based on steering behaviours presented by C. Reynols, see https://www.red3d.com/cwr/steer/";
 

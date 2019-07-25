@@ -8,7 +8,7 @@ public class sbEvade : MonoBehaviour, ISteeringBehaviorRelationalToPlayer<Rigidb
     float maximumPrediction = 1.0f;
     float prediction = 0.0f;
 
-    public string nameOfBehaviour = "Pursue";
+    public string nameOfBehaviour = "Evade";
 
     public string descriptionOfBehaviour = "Method based on steering behaviours presented by C. Reynols, see https://www.red3d.com/cwr/steer/";
 

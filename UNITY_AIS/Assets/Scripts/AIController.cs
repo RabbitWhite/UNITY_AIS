@@ -17,6 +17,7 @@ public class AIController : MonoBehaviour
     sbFlee fleeScript;
     sbArrive arriveScript;
     sbAlign alignScript;
+    sbMatchVelocity matchVelocityScript;
     sbPursue pursueScript;
     sbEvade evadeScript;
     
@@ -26,7 +27,7 @@ public class AIController : MonoBehaviour
 
 
     // Currently active behaviour.
-    public enum Behaviour { Seek, Flee, Arrive, Align, Pursue, Evade };
+    public enum Behaviour { Seek, Flee, Arrive, Align, MatchVelocity, Pursue, Evade };
     public Behaviour selectedBehaviour;
 
     Animator anim;
@@ -37,6 +38,7 @@ public class AIController : MonoBehaviour
         fleeScript = GetComponent<sbFlee>();
         arriveScript = GetComponent<sbArrive>();
         alignScript = GetComponent<sbAlign>();
+        matchVelocityScript = GetComponent<sbMatchVelocity>();
         pursueScript = GetComponent<sbPursue>();
         evadeScript = GetComponent<sbEvade>();
 
@@ -78,8 +80,16 @@ public class AIController : MonoBehaviour
                     // Apply the steering behaviour and update the orientation.
                     alignScript.updateVelocity(ref rigidbody, ref targetCC);
 
-                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + arriveScript.nameOfBehaviour;
-                    guiController.descriptionOfBehaviour.text = "Description: \n" + arriveScript.descriptionOfBehaviour;
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + alignScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + alignScript.descriptionOfBehaviour;
+
+                    break;
+                case Behaviour.MatchVelocity:
+                    // Apply the steering behaviour and update the orientation.
+                    matchVelocityScript.updateVelocity(ref rigidbody, ref targetCC);
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + matchVelocityScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + matchVelocityScript.descriptionOfBehaviour;
 
                     break;
                 case Behaviour.Pursue:
