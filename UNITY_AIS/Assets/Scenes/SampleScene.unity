@@ -1126,6 +1126,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Evade
       m_Image: {fileID: 0}
+    - m_Text: Face
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1935,6 +1937,21 @@ MonoBehaviour:
   nameOfBehaviour: Arrive
   descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
     see https://www.red3d.com/cwr/steer/
+--- !u!114 &1454016993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454016984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5bd082fbbdaae4f9481a86de5ff018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfBehaviour: Face
+  descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
+    see https://www.red3d.com/cwr/steer/
 --- !u!114 &1454016994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1964,7 +1981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  nameOfBehaviour: Arrive
+  nameOfBehaviour: Match Velocity
   descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
     see https://www.red3d.com/cwr/steer/
 --- !u!1 &1504335860
@@ -2675,6 +2692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7811f776a3ef3654b9302231f302e20d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 15
   rotationSpeed: 8
   currentVelocity: {x: 0, y: 0, z: 0}

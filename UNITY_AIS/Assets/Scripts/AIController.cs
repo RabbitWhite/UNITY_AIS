@@ -20,6 +20,7 @@ public class AIController : MonoBehaviour
     sbMatchVelocity matchVelocityScript;
     sbPursue pursueScript;
     sbEvade evadeScript;
+    sbFace faceScript;
     
 
     GUIController guiController;
@@ -27,7 +28,7 @@ public class AIController : MonoBehaviour
 
 
     // Currently active behaviour.
-    public enum Behaviour { Seek, Flee, Arrive, Align, MatchVelocity, Pursue, Evade };
+    public enum Behaviour { Seek, Flee, Arrive, Align, MatchVelocity, Pursue, Evade, Face };
     public Behaviour selectedBehaviour;
 
     Animator anim;
@@ -41,6 +42,7 @@ public class AIController : MonoBehaviour
         matchVelocityScript = GetComponent<sbMatchVelocity>();
         pursueScript = GetComponent<sbPursue>();
         evadeScript = GetComponent<sbEvade>();
+        faceScript = GetComponent<sbFace>();
 
         targetRB = Target.GetComponent<Rigidbody>();
         targetCC = Target.GetComponent<CharacterController>();
@@ -108,6 +110,15 @@ public class AIController : MonoBehaviour
 
                     guiController.nameOfBehaviour.text = "Selected behaviour: \n" + pursueScript.nameOfBehaviour;
                     guiController.descriptionOfBehaviour.text = "Description: \n" + pursueScript.descriptionOfBehaviour;
+
+                    break;
+                case Behaviour.Face:
+                    // Apply the steering behaviour and update the orientation.
+                    faceScript.updateVelocity(ref rigidbody, ref targetCC);
+
+
+                    guiController.nameOfBehaviour.text = "Selected behaviour: \n" + faceScript.nameOfBehaviour;
+                    guiController.descriptionOfBehaviour.text = "Description: \n" + faceScript.descriptionOfBehaviour;
 
                     break;
                 case Behaviour.Seek:
