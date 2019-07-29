@@ -1128,6 +1128,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Face
       m_Image: {fileID: 0}
+    - m_Text: Wander
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1966,6 +1968,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   nameOfBehaviour: Pursue
+  descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
+    see https://www.red3d.com/cwr/steer/
+--- !u!114 &1454016995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454016984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf53bbc27eda1e4ba6bd2509c527e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 8
+  nameOfBehaviour: Wander
   descriptionOfBehaviour: Method based on steering behaviours presented by C. Reynols,
     see https://www.red3d.com/cwr/steer/
 --- !u!114 &1454016996

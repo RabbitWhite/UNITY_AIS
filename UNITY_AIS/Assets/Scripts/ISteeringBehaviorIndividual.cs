@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISteeringBehaviorIndividual
+public interface ISteeringBehaviorIndividual<T>
 {
-    
+    void updateVelocity(ref T ownRB);
 }
